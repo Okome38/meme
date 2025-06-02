@@ -1,0 +1,577 @@
+@{
+    ViewData["Title"] = "試験カウントダウン";
+}
+
+<div class="container">
+    <div class="text-center mb-4">
+        <h1 class="display-4">💀 試験カウントダウン ⚡</h1>
+        <p class="lead text-danger">次の中間試験・期末試験まであと何日？</p>
+    </div>
+
+    <!-- カウントダウン表示エリア -->
+    <div class="countdown-container">
+        <div class="card exam-card">
+            <div class="card-header text-center">
+                <h2 id="examTitle" class="exam-title">試験情報を取得中...</h2>
+            </div>
+            <div class="card-body text-center">
+                <div class="countdown-display">
+                    <div class="days-container">
+                        <span id="daysCount" class="days-number">--</span>
+                        <span class="days-label">日</span>
+                        <div class="skull-decoration">💀</div>
+                    </div>
+                    <div class="countdown-text">
+                        <p id="countdownMessage" class="message">計算中...</p>
+                        <p id="examDate" class="exam-date"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 今後の試験予定一覧 -->
+    <div class="upcoming-exams mt-5">
+        <h3 class="text-center mb-4">⚠️ 今後の試験予定 ⚠️</h3>
+        <div id="examList" class="exam-list">
+            <!-- JavaScriptで動的に生成 -->
+        </div>
+    </div>
+
+    <!-- ホームに戻るボタン -->
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary btn-lg">🏠 ホームに戻る</a>
+    </div>
+</div>
+
+<style>
+@@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+body {
+    background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+    min-height: 100vh;
+    color: #fff;
+}
+
+.countdown-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.exam-card {
+    border: 3px solid #ff0000;
+    box-shadow: 0 10px 30px rgba(255,0,0,0.3), 0 0 50px rgba(255,0,0,0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #2d1b69 0%, #11052c 50%, #3c0000 100%);
+    color: #fff;
+    position: relative;
+    animation: pulseRed 2s infinite;
+}
+
+@@keyframes pulseRed {
+    0%, 100% { box-shadow: 0 10px 30px rgba(255,0,0,0.3), 0 0 50px rgba(255,0,0,0.1); }
+    50% { box-shadow: 0 15px 40px rgba(255,0,0,0.5), 0 0 80px rgba(255,0,0,0.2); }
+}
+
+.exam-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,0,0,0.1) 50%, transparent 70%);
+    animation: lightning 3s infinite;
+}
+
+@@keyframes lightning {
+    0%, 90%, 100% { opacity: 0; }
+    95% { opacity: 1; }
+}
+
+.exam-card .card-header {
+    background: transparent;
+    border: none;
+    padding: 2rem 1.5rem 1rem;
+    position: relative;
+}
+
+.exam-title {
+    font-family: 'Creepster', cursive;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+    animation: textFlicker 1.5s infinite alternate;
+}
+
+@@keyframes textFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.countdown-display {
+    padding: 2rem 1rem;
+}
+
+.days-container {
+    position: relative;
+    background: radial-gradient(circle, rgba(139,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%);
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    border: 4px solid #ff0000;
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 0 30px rgba(255,0,0,0.3), 0 0 50px rgba(255,0,0,0.2);
+    animation: rotateAndPulse 4s infinite;
+}
+
+@@keyframes rotateAndPulse {
+    0%, 100% { 
+        transform: rotate(0deg) scale(1);
+        border-color: #ff0000;
+    }
+    25% { 
+        transform: rotate(5deg) scale(1.05);
+        border-color: #ff6666;
+    }
+    50% { 
+        transform: rotate(0deg) scale(1.1);
+        border-color: #ff0000;
+    }
+    75% { 
+        transform: rotate(-5deg) scale(1.05);
+        border-color: #cc0000;
+    }
+}
+
+.skull-decoration {
+    position: absolute;
+    font-size: 2rem;
+    top: -15px;
+    right: -15px;
+    animation: float 2s ease-in-out infinite;
+}
+
+@@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.days-number {
+    font-family: 'Creepster', cursive;
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+    color: #fff;
+    animation: numberGlow 1s infinite alternate;
+}
+
+@@keyframes numberGlow {
+    0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+    100% { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000; }
+}
+
+.days-label {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    color: #ffcccc;
+}
+
+.countdown-text {
+    margin-top: 1rem;
+}
+
+.message {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px #ff0000;
+    color: #ffcccc;
+}
+
+.exam-date {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+    color: #ffdddd;
+}
+
+.exam-list {
+    display: grid;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.exam-item {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(255,0,0,0.2);
+    border: 2px solid #ff4444;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.exam-item:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 25px rgba(255,0,0,0.4);
+    border-color: #ff0000;
+}
+
+.exam-item-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffcccc;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px #ff0000;
+}
+
+.exam-item-date {
+    color: #cccccc;
+    font-size: 1rem;
+}
+
+.exam-item-days {
+    color: #ff6666;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    text-shadow: 0 0 5px #ff0000;
+}
+
+.display-4 {
+    font-family: 'Creepster', cursive;
+    background: linear-gradient(45deg, #ff0000, #ff6666, #cc0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    text-shadow: 0 0 20px #ff0000;
+    animation: titleShake 0.5s infinite;
+}
+
+@@keyframes titleShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+.text-danger {
+    color: #ff6666 !important;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, #6c757d, #495057);
+    border: 2px solid #ff4444;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,0,0,0.3);
+    border-color: #ff0000;
+    background: linear-gradient(45deg, #8b0000, #654321);
+}
+
+.alert-info {
+    background: linear-gradient(45deg, #2d1b69, #1a1a2e);
+    border: 2px solid #ff4444;
+    border-radius: 12px;
+    color: #ffcccc;
+}
+
+/* 怖いエフェクト追加 */
+.countdown-container::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    right: -50px;
+    bottom: -50px;
+    background: radial-gradient(circle, transparent 70%, rgba(255,0,0,0.1) 100%);
+    z-index: -1;
+    animation: aura 3s infinite;
+}
+
+@@keyframes aura {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+@@media (max-width: 768px) {
+    .days-container {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .days-number {
+        font-size: 3rem;
+    }
+    
+    .days-label {
+        font-size: 1.2rem;
+    }
+    
+    .exam-title {
+        font-size: 1.5rem;
+    }
+    
+    .message {
+        font-size: 1.1rem;
+    }
+    
+    .skull-decoration {
+        font-size: 1.5rem;
+        top: -10px;
+        right: -10px;
+    }
+}
+</style>
+
+<script>
+// 年間行事予定データ（Schedule.cshtmlから抽出）
+const scheduleData = [
+    // 4月
+    { start: "4/1", end: "4/5", title: "春季休業" },
+    { start: "4/3", end: "4/3", title: "開寮・入寮式・新入寮生オリエンテーション" },
+    { start: "4/4", end: "4/4", title: "入学式・新入生オリエンテーション" },
+    { start: "4/7", end: "4/7", title: "一斉健康診断・専攻科オリエンテーション" },
+    { start: "4/8", end: "4/8", title: "前期授業開始" },
+    { start: "4/16", end: "4/16", title: "新入生歓迎会・クラブ紹介" },
+    { start: "4/24", end: "4/24", title: "開校記念日" },
+    { start: "4/29", end: "4/29", title: "昭和の日" },
+    
+    // 5月
+    { start: "5/3", end: "5/3", title: "憲法記念日" },
+    { start: "5/4", end: "5/4", title: "みどりの日" },
+    { start: "5/5", end: "5/5", title: "こどもの日" },
+    { start: "5/7", end: "5/7", title: "校長訓辞・校長表彰・学生総会" },
+    { start: "5/10", end: "5/10", title: "キャンパスウォーク" },
+    { start: "5/12", end: "5/16", title: "いじめ防止週間" },
+    { start: "5/26", end: "5/31", title: "前期中間学力確認週間" },
+    
+    // 6月
+    { start: "6/4", end: "6/4", title: "球技大会" },
+    { start: "6/16", end: "6/20", title: "前期公開授業週間" },
+    { start: "6/21", end: "6/21", title: "専攻科入学者選抜（学力選抜）" },
+    { start: "6/22", end: "6/22", title: "北陸地区高専体育大会（野球）" },
+    { start: "6/28", end: "6/29", title: "北陸地区高専体育大会（各種競技）" },
+    
+    // 7月
+    { start: "7/1", end: "7/2", title: "本科・専攻科期末試験" },
+    { start: "7/4", end: "7/5", title: "本科・専攻科期末試験" },
+    { start: "7/5", end: "7/5", title: "編入学試験" },
+    { start: "7/6", end: "7/8", title: "試験返却日" },
+    { start: "7/12", end: "7/12", title: "夏季休業開始" },
+    { start: "7/19", end: "7/21", title: "北信越地区高専サッカー" },
+    
+    // 8月
+    { start: "8/11", end: "8/11", title: "山の日" },
+    { start: "8/1", end: "8/31", title: "夏季休業継続" },
+    
+    // 9月
+    { start: "9/15", end: "9/15", title: "敬老の日・開寮" },
+    { start: "9/16", end: "9/19", title: "学力強化期間" },
+    { start: "9/20", end: "9/20", title: "キャンパスツアー" },
+    { start: "9/23", end: "9/23", title: "秋分の日" },
+    { start: "9/25", end: "9/25", title: "体育祭" },
+    { start: "9/29", end: "9/29", title: "後期授業開始" },
+    
+    // 10月
+    { start: "10/1", end: "10/1", title: "防災訓練" },
+    { start: "10/4", end: "10/4", title: "専攻科・大学・大学院合同説明会" },
+    { start: "10/5", end: "10/5", title: "高専ロボットコンテスト東海北陸地区大会" },
+    { start: "10/8", end: "10/8", title: "60周年記念式典" },
+    { start: "10/11", end: "10/12", title: "全国高専プログラミングコンテスト" },
+    { start: "10/17", end: "10/19", title: "高専祭" },
+    
+    // 11月
+    { start: "11/3", end: "11/3", title: "文化の日" },
+    { start: "11/8", end: "11/9", title: "全国高専デザインコンペティション" },
+    { start: "11/10", end: "11/14", title: "読書週間" },
+    { start: "11/16", end: "11/16", title: "全国高専ロボットコンテスト" },
+    { start: "11/23", end: "11/23", title: "勤労感謝の日" },
+    { start: "11/26", end: "11/28", title: "後期中間学力確認週間" },
+    
+    // 12月
+    { start: "12/1", end: "12/3", title: "後期中間学力確認週間" },
+    { start: "12/6", end: "12/6", title: "キャリア教育セミナー" },
+    { start: "12/11", end: "12/17", title: "後期公開授業週間" },
+    { start: "12/25", end: "12/25", title: "冬季休業開始・閉寮" },
+    
+    // 1月
+    { start: "1/1", end: "1/1", title: "元日" },
+    { start: "1/7", end: "1/7", title: "開寮" },
+    { start: "1/8", end: "1/8", title: "授業再開" },
+    { start: "1/10", end: "1/10", title: "入学者選抜（推薦選抜）" },
+    { start: "1/13", end: "1/13", title: "成人の日" },
+    { start: "1/21", end: "1/21", title: "校長表彰・校長訓辞・学生総会" },
+    
+    // 2月
+    { start: "2/2", end: "2/2", title: "本科５年卒業研究発表" },
+    { start: "2/8", end: "2/8", title: "入学者選抜（学力選抜）" },
+    { start: "2/11", end: "2/11", title: "建国記念の日" },
+    { start: "2/12", end: "2/18", title: "本科・専攻科期末試験" },
+    { start: "2/23", end: "2/23", title: "天皇誕生日" },
+    { start: "2/28", end: "2/29", title: "専攻科特別研究発表会" },
+    
+    // 3月
+    { start: "3/3", end: "3/3", title: "第3ブロック専攻科研究フォーラム" },
+    { start: "3/18", end: "3/18", title: "卒業・修了式" },
+    { start: "3/19", end: "3/19", title: "学年末休業開始" },
+    { start: "3/20", end: "3/20", title: "春分の日" }
+];
+
+// 日本時間を取得する関数
+function getJapanTime() {
+    const now = new Date();
+    // 日本時間（UTC+9）に変換
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const japanTime = new Date(utc + (9 * 3600000));
+    japanTime.setHours(0, 0, 0, 0); // 時刻を00:00:00に設定
+    return japanTime;
+}
+
+// 日付文字列をDateオブジェクトに変換する関数（年度考慮）
+function parseScheduleDate(dateStr) {
+    const [month, day] = dateStr.split('/').map(Number);
+    const japanTime = getJapanTime();
+    const currentYear = japanTime.getFullYear();
+    
+    // 4月以降は今年度、1-3月は次年度として扱う
+    const year = month >= 4 ? currentYear : currentYear + 1;
+    
+    return new Date(year, month - 1, day);
+}
+
+// 試験関連のイベントを抽出
+function getExamEvents() {
+    return scheduleData.filter(event => 
+        event.title.includes('中間') || 
+        event.title.includes('期末試験') ||
+        event.title.includes('学力確認週間')
+    );
+}
+
+// 次の試験を見つける
+function findNextExam() {
+    const today = getJapanTime();
+    
+    const examEvents = getExamEvents();
+    const upcomingExams = [];
+    
+    examEvents.forEach(event => {
+        const startDate = parseScheduleDate(event.start);
+        const endDate = parseScheduleDate(event.end);
+        
+        // 試験期間の開始日が今日以降の場合のみ
+        if (startDate >= today) {
+            const daysUntil = Math.ceil((startDate - today) / (1000 * 60 * 60 * 24));
+            upcomingExams.push({
+                ...event,
+                startDate: startDate,
+                endDate: endDate,
+                daysUntil: daysUntil
+            });
+        }
+    });
+    
+    // 日数でソート
+    upcomingExams.sort((a, b) => a.daysUntil - b.daysUntil);
+    
+    return upcomingExams;
+}
+
+// 日付を表示用にフォーマット
+function formatDate(date) {
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+}
+
+// 期間を表示用にフォーマット
+function formatDateRange(startDate, endDate) {
+    if (startDate.getTime() === endDate.getTime()) {
+        return formatDate(startDate);
+    } else {
+        return `${formatDate(startDate)} ～ ${formatDate(endDate)}`;
+    }
+}
+
+// UIを更新
+function updateCountdown() {
+    const upcomingExams = findNextExam();
+    
+    if (upcomingExams.length === 0) {
+        document.getElementById('examTitle').textContent = '💀 今年度の試験は終了しました 💀';
+        document.getElementById('daysCount').textContent = '🎉';
+        document.getElementById('countdownMessage').textContent = 'お疲れさまでした！';
+        document.getElementById('examDate').textContent = '';
+        return;
+    }
+    
+    const nextExam = upcomingExams[0];
+    
+    document.getElementById('examTitle').textContent = `💀 ${nextExam.title} 💀`;
+    document.getElementById('daysCount').textContent = nextExam.daysUntil;
+    
+    if (nextExam.daysUntil === 0) {
+        document.getElementById('countdownMessage').textContent = '⚡ 今日から試験です！ ⚡';
+    } else if (nextExam.daysUntil === 1) {
+        document.getElementById('countdownMessage').textContent = '⚠️ 明日から試験です！ ⚠️';
+    } else {
+        document.getElementById('countdownMessage').textContent = '⚡ 残り時間 ⚡';
+    }
+    
+    document.getElementById('examDate').textContent = formatDateRange(nextExam.startDate, nextExam.endDate);
+    
+    // 今後の試験一覧を更新
+    updateExamList(upcomingExams);
+}
+
+// 試験一覧を更新
+function updateExamList(upcomingExams) {
+    const examListElement = document.getElementById('examList');
+    
+    if (upcomingExams.length <= 1) {
+        examListElement.innerHTML = '<div class="alert alert-info text-center">💀 他の予定されている試験はありません 💀</div>';
+        return;
+    }
+    
+    let html = '';
+    // 最初の試験（メインカウントダウン）以外を表示
+    for (let i = 1; i < upcomingExams.length && i < 6; i++) {
+        const exam = upcomingExams[i];
+        html += `
+            <div class="exam-item">
+                <div class="exam-item-title">💀 ${exam.title}</div>
+                <div class="exam-item-date">${formatDateRange(exam.startDate, exam.endDate)}</div>
+                <div class="exam-item-days">⚡ あと ${exam.daysUntil} 日 ⚡</div>
+            </div>
+        `;
+    }
+    
+    examListElement.innerHTML = html;
+}
+
+// ページ読み込み時に実行
+document.addEventListener('DOMContentLoaded', function() {
+    updateCountdown();
+    
+    // 1時間ごとに更新（より頻繁に日本時間をチェック）
+    setInterval(updateCountdown, 60 * 60 * 1000);
+});
+</script>

@@ -1,0 +1,94 @@
+@{
+    ViewData["Title"] = "Hobby Page";
+}
+
+<h2>趣味ページ</h2>
+
+<div id="password-section">
+    <p>このページにアクセスするにはパスワードを入力してください。</p>
+    <input type="password" id="passwordInput" placeholder="パスワードを入力">
+    <button onclick="checkPassword()">送信</button>
+    <p id="errorMsg" style="color:red;"></p>
+</div>
+
+<div id="animal-section" style="display:none;">
+    <h3>🐾 ランダムアニマル画像スライドショー</h3>
+    <p>キツネ、柴犬、猫、レッサーパンダの画像が3秒ごとに切り替わります。</p>
+    <div style="margin-top:20px;">
+        <img id="animalImage" src="" alt="動物画像">
+    </div>
+</div>
+
+<style>
+    #animalImage {
+        width: 100%;
+        height: auto;
+        max-width: 800px;
+        display: block;
+        margin: 0 auto;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+</style>
+
+@section Scripts {
+    <script>
+        const correctPassword = "1234";
+        let intervalId;
+
+        function checkPassword() {
+            const input = document.getElementById("passwordInput").value;
+            if (input === correctPassword) {
+                document.getElementById("password-section").style.display = "none";
+                document.getElementById("animal-section").style.display = "block";
+                startImageRotation();
+            } else {
+                document.getElementById("errorMsg").innerText = "パスワードが違います。";
+            }
+        }
+
+        // API取得関数たち
+        function fetchFox() {
+            return fetch('https://randomfox.ca/floof/')
+                .then(res => res.json())
+                .then(data => data.image);
+        }
+
+        function fetchShiba() {
+            return fetch('https://shibe.online/api/shibes?count=1')
+			        .then(res => res.json())
+			        .then(data => data[0].replace('http://', 'https://')); // HTTPSに変換
+				}
+
+        function fetchCat() {
+            return fetch('https://api.thecatapi.com/v1/images/search')
+                .then(res => res.json())
+                .then(data => data[0].url);
+        }
+
+        function fetchRedPanda() {
+            return fetch('https://some-random-api.com/animal/red_panda')
+                .then(res => res.json())
+                .then(data => data.image);
+        }
+
+        function startImageRotation() {
+            const fetchers = [fetchFox, fetchCat, fetchRedPanda];
+            let current = 0;
+
+            function updateImage() {
+                fetchers[current % fetchers.length]()
+                    .then(url => {
+                        document.getElementById("animalImage").src = url;
+                    })
+                    .catch(err => {
+                        console.error("画像取得エラー:", err);
+                    });
+                current++;
+            }
+
+            updateImage(); // 最初の表示
+            intervalId = setInterval(updateImage, 3000); // 3秒ごとに更新
+        }
+    </script>
+}

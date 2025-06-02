@@ -1,0 +1,639 @@
+@{
+    ViewData["Title"] = "年間行事予定";
+}
+
+<div class="container">
+    <div class="text-center mb-4">
+        <h1 class="display-4">📅 令和７年度 福井高専 年間行事予定</h1>
+        <p class="lead">福井工業高等専門学校の年間スケジュール</p>
+    </div>
+
+    <!-- 月別タブ -->
+    <div class="schedule-tabs mb-4">
+        <ul class="nav nav-pills nav-fill" id="monthTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="apr-tab" data-bs-toggle="pill" data-bs-target="#apr" type="button" role="tab">4月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="may-tab" data-bs-toggle="pill" data-bs-target="#may" type="button" role="tab">5月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="jun-tab" data-bs-toggle="pill" data-bs-target="#jun" type="button" role="tab">6月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="jul-tab" data-bs-toggle="pill" data-bs-target="#jul" type="button" role="tab">7月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="aug-tab" data-bs-toggle="pill" data-bs-target="#aug" type="button" role="tab">8月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="sep-tab" data-bs-toggle="pill" data-bs-target="#sep" type="button" role="tab">9月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="oct-tab" data-bs-toggle="pill" data-bs-target="#oct" type="button" role="tab">10月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="nov-tab" data-bs-toggle="pill" data-bs-target="#nov" type="button" role="tab">11月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="dec-tab" data-bs-toggle="pill" data-bs-target="#dec" type="button" role="tab">12月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="jan-tab" data-bs-toggle="pill" data-bs-target="#jan" type="button" role="tab">1月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="feb-tab" data-bs-toggle="pill" data-bs-target="#feb" type="button" role="tab">2月</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="mar-tab" data-bs-toggle="pill" data-bs-target="#mar" type="button" role="tab">3月</button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 月別コンテンツ -->
+    <div class="tab-content" id="monthTabsContent">
+        <!-- 4月 -->
+        <div class="tab-pane fade show active" id="apr" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3>🌸 4月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">4/1-4/5</span>
+                                <span class="event-title">春季休業</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">4/3</span>
+                                <span class="event-title">開寮・入寮式・新入寮生オリエンテーション</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">4/4</span>
+                                <span class="event-title">入学式・新入生オリエンテーション</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">4/7</span>
+                                <span class="event-title">一斉健康診断・専攻科オリエンテーション</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">4/8</span>
+                                <span class="event-title">前期授業開始</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">4/16</span>
+                                <span class="event-title">新入生歓迎会・クラブ紹介</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">4/24</span>
+                                <span class="event-title">開校記念日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">4/29</span>
+                                <span class="event-title">昭和の日</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5月 -->
+        <div class="tab-pane fade" id="may" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3>🌿 5月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">5/3</span>
+                                <span class="event-title">憲法記念日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">5/4</span>
+                                <span class="event-title">みどりの日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">5/5</span>
+                                <span class="event-title">こどもの日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">5/7</span>
+                                <span class="event-title">校長訓辞・校長表彰・学生総会</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">5/10</span>
+                                <span class="event-title">キャンパスウォーク</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">5/12-5/16</span>
+                                <span class="event-title">いじめ防止週間</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">5/26-5/31</span>
+                                <span class="event-title">前期中間学力確認週間</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6月 -->
+        <div class="tab-pane fade" id="jun" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h3>☔ 6月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">6/4</span>
+                                <span class="event-title">球技大会</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">6/16-6/20</span>
+                                <span class="event-title">前期公開授業週間</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">6/21</span>
+                                <span class="event-title">専攻科入学者選抜（学力選抜）</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">6/22</span>
+                                <span class="event-title">北陸地区高専体育大会（野球）</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">6/28-6/29</span>
+                                <span class="event-title">北陸地区高専体育大会（各種競技）</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7月 -->
+        <div class="tab-pane fade" id="jul" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h3>🌞 7月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">7/1-7/2</span>
+                                <span class="event-title">本科・専攻科期末試験</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">7/4-7/5</span>
+                                <span class="event-title">本科・専攻科期末試験</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">7/5</span>
+                                <span class="event-title">編入学試験</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">7/6-7/8</span>
+                                <span class="event-title">試験返却日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">7/12</span>
+                                <span class="event-title">夏季休業開始</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">7/19-7/21</span>
+                                <span class="event-title">北信越地区高専サッカー</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8月 -->
+        <div class="tab-pane fade" id="aug" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h3>🏖️ 8月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="event-item">
+                                <span class="event-date">8/11</span>
+                                <span class="event-title">山の日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">8/1-8/31</span>
+                                <span class="event-title">夏季休業継続</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9月 -->
+        <div class="tab-pane fade" id="sep" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h3>🍂 9月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">9/15</span>
+                                <span class="event-title">敬老の日・開寮</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">9/16-9/19</span>
+                                <span class="event-title">学力強化期間</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">9/20</span>
+                                <span class="event-title">キャンパスツアー</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">9/23</span>
+                                <span class="event-title">秋分の日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">9/25</span>
+                                <span class="event-title">体育祭</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">9/29</span>
+                                <span class="event-title">後期授業開始</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10月 -->
+        <div class="tab-pane fade" id="oct" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3>🎃 10月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">10/1</span>
+                                <span class="event-title">防災訓練</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">10/4</span>
+                                <span class="event-title">専攻科・大学・大学院合同説明会</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">10/5</span>
+                                <span class="event-title">高専ロボットコンテスト東海北陸地区大会</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">10/8</span>
+                                <span class="event-title">60周年記念式典</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">10/11-10/12</span>
+                                <span class="event-title">全国高専プログラミングコンテスト</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">10/17-10/19</span>
+                                <span class="event-title">高専祭</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11月 -->
+        <div class="tab-pane fade" id="nov" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3>🍁 11月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">11/3</span>
+                                <span class="event-title">文化の日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">11/8-11/9</span>
+                                <span class="event-title">全国高専デザインコンペティション</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">11/10-11/14</span>
+                                <span class="event-title">読書週間</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">11/16</span>
+                                <span class="event-title">全国高専ロボットコンテスト</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">11/23</span>
+                                <span class="event-title">勤労感謝の日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">11/26-11/28</span>
+                                <span class="event-title">後期中間学力確認週間</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12月 -->
+        <div class="tab-pane fade" id="dec" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h3>❄️ 12月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">12/1-12/3</span>
+                                <span class="event-title">後期中間学力確認週間</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">12/6</span>
+                                <span class="event-title">キャリア教育セミナー</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">12/11-12/17</span>
+                                <span class="event-title">後期公開授業週間</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">12/25</span>
+                                <span class="event-title">冬季休業開始・閉寮</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1月 -->
+        <div class="tab-pane fade" id="jan" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h3>🎍 1月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">1/1</span>
+                                <span class="event-title">元日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">1/7</span>
+                                <span class="event-title">開寮</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">1/8</span>
+                                <span class="event-title">授業再開</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">1/10</span>
+                                <span class="event-title">入学者選抜（推薦選抜）</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">1/13</span>
+                                <span class="event-title">成人の日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">1/21</span>
+                                <span class="event-title">校長表彰・校長訓辞・学生総会</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2月 -->
+        <div class="tab-pane fade" id="feb" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h3>🌸 2月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">2/2</span>
+                                <span class="event-title">本科５年卒業研究発表</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">2/8</span>
+                                <span class="event-title">入学者選抜（学力選抜）</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">2/11</span>
+                                <span class="event-title">建国記念の日</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">2/12-2/18</span>
+                                <span class="event-title">本科・専攻科期末試験</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">2/23</span>
+                                <span class="event-title">天皇誕生日</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">2/28-2/29</span>
+                                <span class="event-title">専攻科特別研究発表会</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3月 -->
+        <div class="tab-pane fade" id="mar" role="tabpanel">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3>🌸 3月の行事予定</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">3/3</span>
+                                <span class="event-title">第3ブロック専攻科研究フォーラム</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">3/18</span>
+                                <span class="event-title">卒業・修了式</span>
+                            </div>
+                            <div class="event-item">
+                                <span class="event-date">3/19</span>
+                                <span class="event-title">学年末休業開始</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="event-item">
+                                <span class="event-date">3/20</span>
+                                <span class="event-title">春分の日</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ホームに戻るボタン -->
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary btn-lg">🏠 ホームに戻る</a>
+    </div>
+</div>
+
+<style>
+.schedule-tabs .nav-pills .nav-link {
+    border-radius: 25px;
+    margin: 0 2px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.schedule-tabs .nav-pills .nav-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.schedule-tabs .nav-pills .nav-link.active {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+}
+
+.event-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.event-item:last-child {
+    border-bottom: none;
+}
+
+.event-date {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+    min-width: 80px;
+    text-align: center;
+    margin-right: 15px;
+    white-space: nowrap;
+}
+
+.event-title {
+    font-size: 1em;
+    color: #333;
+    font-weight: 500;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-primary) 100%);
+    border: none;
+    padding: 1.5rem;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.display-4 {
+    background: linear-gradient(45deg, #007bff, #28a745);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, #6c757d, #495057);
+    border: none;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+@@media (max-width: 768px) {
+    .schedule-tabs .nav-pills .nav-link {
+        font-size: 0.9em;
+        padding: 8px 12px;
+        margin: 2px 1px;
+    }
+    
+    .event-date {
+        min-width: 60px;
+        font-size: 0.8em;
+        padding: 4px 8px;
+    }
+    
+    .event-title {
+        font-size: 0.9em;
+    }
+}
+</style>
