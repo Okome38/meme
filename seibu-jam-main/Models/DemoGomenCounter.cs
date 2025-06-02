@@ -1,9 +1,9 @@
 namespace seibuDatabase.Models
 {
-    public class DonCounter
+    public class DemoGomenCounter
     {
-        public int donCount { get; set; }
-        public int nonDonCount { get; set; }
+        public int demoGomenCount { get; set; }
+        public int nonDemoGomenCount { get; set; }
         public DateTime lastUpdated { get; set; }
         public string lastUpdatedBy { get; set; }
     }
