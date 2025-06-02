@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  seibu-jam:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - FIREBASE_API_KEY=AIzaSyAQm6zlL2FQkYUKj_yjGKgytN4vQuLtNak
+      - FIREBASE_ADMIN_EMAIL=admin@seibu.local
+      - FIREBASE_ADMIN_PASSWORD=Oneshota@3150
+    restart: unless-stopped
+    container_name: seibu-jam-app
