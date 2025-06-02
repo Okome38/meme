@@ -1,0 +1,130 @@
+@model seibuDatabase.Models.DemoGomenCounter
+@{
+    ViewData["Title"] = "でもごめんカウンター";
+}
+
+<div class="text-center">
+    <h1 class="display-4">でもごめんカウンター</h1>
+    <p>みんなの「でもごめん」をカウントしよう！</p>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-6">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <h2 class="card-title">🙏 でもごめん</h2>
+                                <h1 class="display-2">@Model.demoGomenCount</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-secondary text-white">
+                            <div class="card-body">
+                                <h2 class="card-title">❌ 非でもごめん</h2>
+                                <h1 class="display-2">@Model.nonDemoGomenCount</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        最終更新: @Model.lastUpdated.ToString("yyyy/MM/dd HH:mm") by @Model.lastUpdatedBy
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>カウンター更新</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="UpdateCounter" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">管理者パスワード</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="updatedBy" class="form-label">更新者名（任意）</label>
+                                <input type="text" class="form-control" id="updatedBy" name="updatedBy" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="submit" name="isDemoGomen" value="true" class="btn btn-primary btn-lg w-100">
+                                🙏 でもごめん +1
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" name="isDemoGomen" value="false" class="btn btn-secondary btn-lg w-100">
+                                ❌ 非でもごめん +1
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0">⚠️ カウンターリセット</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="ResetCounter" method="post" onsubmit="return confirm('本当にカウンターをリセットしますか？この操作は取り消せません。');">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="resetPassword" class="form-label">管理者パスワード</label>
+                                <input type="password" class="form-control" id="resetPassword" name="password" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="resetBy" class="form-label">リセット実行者名（任意）</label>
+                                <input type="text" class="form-control" id="resetBy" name="resetBy" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger">
+                        🔄 カウンターをリセット
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 自動リロード（30秒ごと）
+        setInterval(function() {
+            location.reload();
+        }, 30000);
+    </script>
+}
