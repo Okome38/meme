@@ -4,12 +4,12 @@ using seibuDatabase.Services;
 
 namespace seibuDatabase.Controllers
 {
-    public class DonCounterController : Controller
+    public class DemoGomenCounterController : Controller
     {
         private readonly FirebaseService _firebaseService;
         private const string ADMIN_PASSWORD = "seibu2025"; // パスワードを設定
 
-        public DonCounterController()
+        public DemoGomenCounterController()
         {
             _firebaseService = new FirebaseService();
         }
@@ -17,12 +17,12 @@ namespace seibuDatabase.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var counter = await _firebaseService.GetDonCounter();
+            var counter = await _firebaseService.GetDemoGomenCounter();
             return View(counter);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateCounter(string password, bool isDon, string updatedBy)
+        public async Task<IActionResult> UpdateCounter(string password, bool isDemoGomen, string updatedBy)
         {
             if (string.IsNullOrEmpty(password) || password != ADMIN_PASSWORD)
             {
@@ -35,9 +35,9 @@ namespace seibuDatabase.Controllers
                 updatedBy = "匿名";
             }
 
-            await _firebaseService.UpdateDonCounter(isDon, updatedBy);
+            await _firebaseService.UpdateDemoGomenCounter(isDemoGomen, updatedBy);
             
-            TempData["Success"] = isDon ? "丼カウンターを更新しました！" : "非丼カウンターを更新しました！";
+            TempData["Success"] = isDemoGomen ? "でもごめんカウンターを更新しました！" : "非でもごめんカウンターを更新しました！";
             return RedirectToAction("Index");
         }
 
@@ -55,7 +55,7 @@ namespace seibuDatabase.Controllers
                 resetBy = "匿名";
             }
 
-            await _firebaseService.ResetDonCounter(resetBy);
+            await _firebaseService.ResetDemoGomenCounter(resetBy);
             
             TempData["Success"] = "カウンターをリセットしました！";
             return RedirectToAction("Index");
