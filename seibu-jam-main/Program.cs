@@ -60,6 +60,6 @@ app.MapControllers();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=DemoGomenCounter}/{action=Index}/{id?}");
 
 app.Run();
