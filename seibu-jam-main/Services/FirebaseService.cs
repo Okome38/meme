@@ -309,109 +309,108 @@ public async Task<List<Message>> GetMessages()
             }
         }
 
-        // 丼カウンターを取得（認証不要で実行）
-        public async Task<DonCounter> GetDonCounter()
+        // でもごめんカウンターを取得（認証不要で実行）
+public async Task<DemoGomenCounter> GetDemoGomenCounter()
+{
+    try
+    {
+        var firebase = GetPublicClient();
+        var counter = await firebase
+            .Child("demoGomenCounter")
+            .OnceSingleAsync<DemoGomenCounter>();
+        
+        return counter ?? new DemoGomenCounter 
+        { 
+            demoGomenCount = 0, 
+            nonDemoGomenCount = 0, 
+            lastUpdated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time")),
+            lastUpdatedBy = "system"
+        };
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"でもごめんカウンター取得エラー: {ex.Message}");
+        return new DemoGomenCounter 
+        { 
+            demoGomenCount = 0, 
+            nonDemoGomenCount = 0, 
+            lastUpdated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time")),
+            lastUpdatedBy = "system"
+        };
+    }
+}
+
+// でもごめんカウンターを更新（管理者権限が必要）
+public async Task UpdateDemoGomenCounter(bool isDemoGomen, string updatedBy)
+{
+    try
+    {
+        // 入力検証
+        if (string.IsNullOrWhiteSpace(updatedBy))
         {
-            try
-            {
-                var firebase = GetPublicClient();
-                var counter = await firebase
-                    .Child("donCounter")
-                    .OnceSingleAsync<DonCounter>();
-                
-                return counter ?? new DonCounter 
-                { 
-                    donCount = 0, 
-                    nonDonCount = 0, 
-                    lastUpdated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time")),
-                    lastUpdatedBy = "system"
-                };
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"丼カウンター取得エラー: {ex.Message}");
-                return new DonCounter 
-                { 
-                    donCount = 0, 
-                    nonDonCount = 0, 
-                    lastUpdated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time")),
-                    lastUpdatedBy = "system"
-                };
-            }
+            updatedBy = "匿名";
         }
+        updatedBy = System.Net.WebUtility.HtmlEncode(updatedBy.Trim());
 
-        // 丼カウンターを更新（管理者権限が必要）
-        public async Task UpdateDonCounter(bool isDon, string updatedBy)
+        var adminToken = await GetAdminAuthTokenAsync();
+        var currentCounter = await GetDemoGomenCounter();
+        
+        if (isDemoGomen)
         {
-            try
-            {
-                // 入力検証
-                if (string.IsNullOrWhiteSpace(updatedBy))
-                {
-                    updatedBy = "匿名";
-                }
-                updatedBy = System.Net.WebUtility.HtmlEncode(updatedBy.Trim());
-
-                var adminToken = await GetAdminAuthTokenAsync();
-                var currentCounter = await GetDonCounter();
-                
-                if (isDon)
-                {
-                    currentCounter.donCount++;
-                }
-                else
-                {
-                    currentCounter.nonDonCount++;
-                }
-                
-                currentCounter.lastUpdated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time"));
-                currentCounter.lastUpdatedBy = updatedBy;
-
-                var firebase = GetAuthenticatedClient(adminToken);
-                await firebase
-                    .Child("donCounter")
-                    .PutAsync(currentCounter);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"丼カウンター更新エラー: {ex.Message}");
-                throw new Exception($"丼カウンターの更新に失敗しました: {ex.Message}");
-            }
+            currentCounter.demoGomenCount++;
         }
-
-        // カウンターをリセット（管理者権限が必要）
-        public async Task ResetDonCounter(string resetBy)
+        else
         {
-            try
-            {
-                // 入力検証
-                if (string.IsNullOrWhiteSpace(resetBy))
-                {
-                    resetBy = "匿名";
-                }
-                resetBy = System.Net.WebUtility.HtmlEncode(resetBy.Trim());
-
-                var adminToken = await GetAdminAuthTokenAsync();
-                var resetCounter = new DonCounter
-                {
-                    donCount = 0,
-                    nonDonCount = 0,
-                    lastUpdated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time")),
-                    lastUpdatedBy = resetBy
-                };
-
-                var firebase = GetAuthenticatedClient(adminToken);
-                await firebase
-                    .Child("donCounter")
-                    .PutAsync(resetCounter);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"カウンターリセットエラー: {ex.Message}");
-                throw new Exception($"カウンターのリセットに失敗しました: {ex.Message}");
-            }
+            currentCounter.nonDemoGomenCount++;
         }
+        
+        currentCounter.lastUpdated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time"));
+        currentCounter.lastUpdatedBy = updatedBy;
 
+        var firebase = GetAuthenticatedClient(adminToken);
+        await firebase
+            .Child("demoGomenCounter")
+            .PutAsync(currentCounter);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"でもごめんカウンター更新エラー: {ex.Message}");
+        throw new Exception($"でもごめんカウンターの更新に失敗しました: {ex.Message}");
+    }
+}
+
+// でもごめんカウンターをリセット（管理者権限が必要）
+public async Task ResetDemoGomenCounter(string resetBy)
+{
+    try
+    {
+        // 入力検証
+        if (string.IsNullOrWhiteSpace(resetBy))
+        {
+            resetBy = "匿名";
+        }
+        resetBy = System.Net.WebUtility.HtmlEncode(resetBy.Trim());
+
+        var adminToken = await GetAdminAuthTokenAsync();
+        var resetCounter = new DemoGomenCounter
+        {
+            demoGomenCount = 0,
+            nonDemoGomenCount = 0,
+            lastUpdated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time")),
+            lastUpdatedBy = resetBy
+        };
+
+        var firebase = GetAuthenticatedClient(adminToken);
+        await firebase
+            .Child("demoGomenCounter")
+            .PutAsync(resetCounter);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"でもごめんカウンターリセットエラー: {ex.Message}");
+        throw new Exception($"でもごめんカウンターのリセットに失敗しました: {ex.Message}");
+    }
+}
         // 管理者用：メッセージを削除
         public async Task DeleteMessage(string messageId)
         {
